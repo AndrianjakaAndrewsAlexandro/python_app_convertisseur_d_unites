@@ -36,50 +36,89 @@ fenetre.geometry(f"{largeur_fenetre}x{hauteur_fenetre}+{position_fenetre_largeur
 fenetre.configure(fg_color=bg)
 fenetre.iconbitmap("icons/logo.ico")
 
+# Configuration des grid de la fenetre
+fenetre.grid_columnconfigure(0, weight=1)
+fenetre.grid_rowconfigure(0, weight=1)
+fenetre.grid_rowconfigure(1, weight=20)
+
 # Créations Widgets
 
 # Les frames
 #Frame du titre
-frm_titre = ctk.CTkFrame(fenetre, fg_color=bg, border_color=fg, border_width=2)
+frm_titre = ctk.CTkFrame(
+    fenetre, 
+    fg_color=bg, 
+    )
+frm_titre.grid(pady=10, 
+               padx= 10, 
+               sticky= "nesw", 
+               ipady=10,
+               column=0,
+               row=0
+               )
+# Configuration des grids du frame de titre
+frm_titre.grid_columnconfigure(0, weight=1)
+frm_titre.grid_rowconfigure(0, weight=1)
+frm_titre.grid_rowconfigure(1, weight=1)
+
+#Titres
+label_titre = ctk.CTkLabel(frm_titre, 
+                           text="Convertisseur d'Unités"
+                           )
+label_titre.configure(font=("Aria", 26, "bold"), 
+                      text_color=fg)
+label_titre.grid(
+    column=0,
+    row=0,
+    sticky="ew"
+)
+
+
+label_titre_info = ctk.CTkLabel(frm_titre, 
+                                text="Transforme mesure entre différents systèmes (métrique, impérial, ect...)"
+                                )
+label_titre_info.configure(font=("Aria", 15, "bold"), 
+                           text_color=fg)
+label_titre_info.grid(
+    column=0,
+    row=1,
+    sticky="ew"
+)
 
 
 # Frame principal
-frm_principal = ctk.CTkFrame(fenetre, fg_color=blue, border_color=blue, border_width=2, height=550)
+frm_principal = ctk.CTkFrame(fenetre, 
+                             fg_color=bg 
+                             )
+frm_principal.grid(padx=10, 
+                   pady=(0, 0),
+                   sticky="nesw", 
+                   ipadx= 10,
+                   column=0,
+                   row=1)
+
+#Configuration de Frame principal
 frm_principal.grid_columnconfigure(0, weight=1) # Diviser en quatres colonnes le collones 0 a une seule part
-frm_principal.grid_columnconfigure(1, weight=3) # Le colonnes 1 a trois parts
+frm_principal.grid_columnconfigure(1, weight=20) # Le colonnes 1 a trois parts
+frm_principal.grid_rowconfigure(0, weight=1)
 
 #Frame des options
-frm_option = ctk.CTkFrame(frm_principal, fg_color=bg, border_color=fg, border_width=2)
+frm_option = ctk.CTkFrame(frm_principal, 
+                          fg_color=bg, 
+                          border_color=fg, 
+                          border_width=2)
+frm_option.grid(column=0, 
+                row=0, 
+                padx=2, 
+                sticky = "nsew") # "nsew" permet e proncdre rour epave
 
 # Frame de la converion principale
 frm_conv_principal = ctk.CTkFrame(frm_principal, fg_color=bg, border_color=fg, border_width=2)
+frm_conv_principal.grid(column=1, 
+                        row=0, 
+                        padx=2, 
+                        sticky = "nsew")
 
-# Les labels
-#Titres
-label_titre = ctk.CTkLabel(frm_titre, text="Convertisseur d'Unités")
-label_titre.configure(font=("Aria", 26, "bold"), text_color=fg)
-label_titre_info = ctk.CTkLabel(frm_titre, text="Transforme mesure entre différents systèmes (métrique, impérial, ect...)")
-label_titre_info.configure(font=("Aria", 15, "bold"), text_color=fg)
-
-
-# Les labels dans frame optins
-#label_longeur = ctk.CTkLabel(frm_option, text="Longueur", text_color=fg)
-
-
-
-
-
-
-
-
-# Placement des widgets
-frm_titre.pack(pady=20, padx= 20, fill="x", ipady=10)
-frm_principal.pack(padx=25, fill="both", ipadx= 10)
-label_titre.pack()
-label_titre_info.pack()
-frm_option.grid(column=0, row=0, padx=5, sticky = "nsew") # "nsew" permet e proncdre rour epave
-frm_conv_principal.grid(column=1,row=0, padx=5, sticky = "nsew")
-#label_longeur.pack()
 
 
 

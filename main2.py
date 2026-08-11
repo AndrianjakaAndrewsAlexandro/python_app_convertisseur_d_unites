@@ -17,7 +17,7 @@ fenetre.grid_rowconfigure(2, weight=1)
 
 # Fonction de conversion
 def convertir():
-    valeur = entree.get()
+    valeur = float(entree.get())
     depart = unite_depart.get()
     arrivee = unite_arrivee.get()
     print(f"La valeure entree est: {valeur}")
@@ -122,6 +122,7 @@ unite_depart = ctk.CTkComboBox(
         "Centimètre",
         "Millimètre"
     ])
+unite_depart.set("Mètre")
 unite_depart.grid(
     row=2,
     column=0,
@@ -138,6 +139,7 @@ unite_arrivee = ctk.CTkComboBox(
         "Centimètre",
         "Millimètre"
     ])
+unite_arrivee.set("Mètres")
 unite_arrivee.grid(
     row=3,
     column=0,
