@@ -141,7 +141,7 @@ def yards_miles(u1, u2, valeur):
 
 #print(yards_miles("miles", "yards", 20))    
 
-def final_conv(u1, u2, valeur):
+def longeurs_distances(u1, u2, valeur):
     listes = ["km", "hm", "dam", "m", "dm", "cm", "mm"]
     if u1 in listes and u2 in listes:
         return conv_long(u1, u2, valeur)
@@ -195,7 +195,7 @@ def final_conv(u1, u2, valeur):
 
 
 # TEST FINAL CONVERSION DE u1 en u2
-print(final_conv("cm", "mm", 10))
+#print(final_conv("cm", "mm", 10))
 
 
 

@@ -2,24 +2,548 @@
 
 # Importations
 import customtkinter as ctk
+from tkinter import messagebox
+from backends.longueur_distance import *
+from backends.poids_masse import *
+from backends.volume_capacite import *
+from backends.temperature import *
+from backends.surface import *
+from backends.vitesse import *
+from backends.temps import *
+from backends.donnees import *
 
 
 # les fonctions
-def pourcentage_larg(pourc):
-    return (pourc * largeur_fenetre)/100
+def error_message():
+    error = messagebox.showerror("Erreur", "Veuillez d'abord entrer la domaine de mésure à utiliser qui se situe à votre gauche", parent=fenetre) 
 
-def pourcentage_haut(pourc):
-    return (pourc * hauteur_fenetre)/100
+def error_verification():
+    listes = [".", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+    vide = ""
+    if entree_de.get() == vide:
+        error = messagebox.showerror("Erreur", "Veuillez entrer une valeur pour effectuer la conversion")
+    for i in entree_de.get():
+        if i not in listes:
+            error = messagebox.showerror("Erreur", "Veuillez entrer une valeur valide pour la conversion")
+            entree_de.set(vide)
+            break
+    if combobox_de.get() == vide:
+        error = messagebox.showerror("Erreur", "Pour aboutir à la conversion, veuillez entrer l'unité à convertir", parent=fenetre)    
+    if combobox_vers.get() == vide:
+        error = messagebox.showerror("Erreur", "Pour aboutir à la conversion, veuillez entrer l'unité à convertir", parent=fenetre)
+
+def fonction_longueur():
+    bouton_conversion.configure(command=convertir_longueur)
+
+    btn_longueur.configure(fg_color=blue, text_color=bg)
+    btn_masse.configure(fg_color=bg, text_color=fg)
+    btn_volume.configure(fg_color=bg, text_color=fg)
+    btn_temperature.configure(fg_color=bg, text_color=fg)
+    btn_surface.configure(fg_color=bg, text_color=fg)
+    btn_vitesse.configure(fg_color=bg, text_color=fg)
+    btn_temps.configure(fg_color=bg, text_color=fg)
+    btn_informatique.configure(fg_color=bg, text_color=fg)
+    
+    combobox_de.configure(values=["Kilomètre (km)", "Héctomètre (hm)", "Décamètre (dam)", "Mètre (m)", "Décimètre (dm)", "Centimètre (cm)", "Milimètre (mm)", "Pouces (in)", "Pieds (ft)", "Yards (yd)", "Miles (mi)"])
+    combobox_vers.configure(values=["Kilomètre (km)", "Héctomètre (hm)", "Décamètre (dam)", "Mètre (m)", "Décimètre (dm)", "Centimètre (cm)", "Milimètre (mm)", "Pouces (in)", "Pieds (ft)", "Yards (yd)", "Miles (mi)"]) 
+
+def fonction_masse():
+    bouton_conversion.configure(command=convertir_masse)
+    
+    btn_masse.configure(fg_color=blue, text_color=bg)
+    btn_longueur.configure(fg_color=bg, text_color=fg)
+    btn_volume.configure(fg_color=bg, text_color=fg)
+    btn_temperature.configure(fg_color=bg, text_color=fg)
+    btn_surface.configure(fg_color=bg, text_color=fg)
+    btn_vitesse.configure(fg_color=bg, text_color=fg)
+    btn_temps.configure(fg_color=bg, text_color=fg)
+    btn_informatique.configure(fg_color=bg, text_color=fg)
+
+    combobox_de.configure(values=["Tonne (t)", "Quintal (q)", "Dizaine de kilogramme (dkg)", "Kilogramme (kg)", "Héctogramme (hg)", "Décagramme (dag)", "Gramme (g)", "Décigramme (dg)", "Centigramme (cg)", "Milligramme (mg)", "Once (oz)", "Livre (lb)"])
+    combobox_vers.configure(values=["Tonne (t)", "Quintal (q)", "Dizaine de kilogramme (dkg)", "Kilogramme (kg)", "Héctogramme (hg)", "Décagramme (dag)", "Gramme (g)", "Décigramme (dg)", "Centigramme (cg)", "Milligramme (mg)", "Once (oz)", "Livre (lb)"]) 
+
+def fonction_volume():
+    bouton_conversion.configure(command=convertir_volume)
+    btn_volume.configure(fg_color=blue, text_color=bg)
+    btn_longueur.configure(fg_color=bg, text_color=fg)
+    btn_masse.configure(fg_color=bg, text_color=fg)
+    btn_temperature.configure(fg_color=bg, text_color=fg)
+    btn_surface.configure(fg_color=bg, text_color=fg)
+    btn_vitesse.configure(fg_color=bg, text_color=fg)
+    btn_temps.configure(fg_color=bg, text_color=fg)
+    btn_informatique.configure(fg_color=bg, text_color=fg)
+
+    combobox_de.configure(values=["Kilolitre (kl)", "Héctolitre (hl)", "Décalitre (dal)", "Litre (l)", "Décilitre (dl)", "Centilitre (cl)", "Millilitre (ml)", "Mètre cube (m3)", "Décimètre cube (dm3)", "Centimètre cube (cm3)", "Millimètre cube (mm3)", "Onces (oz)", "Tasses", "Pintes", "Gallons"])
+    combobox_vers.configure(values=["Kilolitre (kl)", "Héctolitre (hl)", "Décalitre (dal)", "Litre (l)", "Décilitre (dl)", "Centilitre (cl)", "Millilitre (ml)", "Mètre cube (m3)", "Décimètre cube (dm3)", "Centimètre cube (cm3)", "Millimètre cube (mm3)", "Onces (oz)", "Tasses", "Pintes", "Gallons"]) 
+
+
+def fonction_temperature():
+    bouton_conversion.configure(command=convertir_temperature)
+
+    btn_temperature.configure(fg_color=blue, text_color=bg) 
+    btn_longueur.configure(fg_color=bg, text_color=fg)
+    btn_masse.configure(fg_color=bg, text_color=fg)
+    btn_volume.configure(fg_color=bg, text_color=fg)
+    btn_surface.configure(fg_color=bg, text_color=fg)
+    btn_vitesse.configure(fg_color=bg, text_color=fg)
+    btn_temps.configure(fg_color=bg, text_color=fg)
+    btn_informatique.configure(fg_color=bg, text_color=fg)
+
+    combobox_de.configure(values=["Kelvin (°K)", "Celcius (°C)", "Fahrenheit (°F)"])
+    combobox_vers.configure(values=["Kelvin (°K)", "Celcius (°C)", "Fahrenheit (°F)"])      
+
+def fonction_surface():
+    bouton_conversion.configure(command=convertir_surface)
+
+    btn_surface.configure(fg_color=blue, text_color=bg)
+    btn_temperature.configure(fg_color=bg, text_color=fg) 
+    btn_longueur.configure(fg_color=bg, text_color=fg)
+    btn_masse.configure(fg_color=bg, text_color=fg)
+    btn_volume.configure(fg_color=bg, text_color=fg)
+    btn_vitesse.configure(fg_color=bg, text_color=fg)
+    btn_temps.configure(fg_color=bg, text_color=fg)
+    btn_informatique.configure(fg_color=bg, text_color=fg)
+
+    combobox_de.configure(values=["Kilomètre carré (km2)", "Héctare (ha)", "Aire (a)", "Mètre carré (m2)", "Décimètre carré (dm2)", "Centimètre carré (cm2)", "Millimètre carré (mm2)"])
+    combobox_vers.configure(values=["Kilomètre carré (km2)", "Héctare (ha)", "Aire (a)", "Mètre carré (m2)", "Décimètre carré (dm2)", "Centimètre carré (cm2)", "Millimètre carré (mm2)"])
+
+def fonction_vitesse():
+    bouton_conversion.configure(command=convertir_vitesse)
+
+    btn_vitesse.configure(fg_color=blue, text_color=bg)
+    btn_temperature.configure(fg_color=bg, text_color=fg) 
+    btn_longueur.configure(fg_color=bg, text_color=fg)
+    btn_masse.configure(fg_color=bg, text_color=fg)
+    btn_volume.configure(fg_color=bg, text_color=fg)
+    btn_surface.configure(fg_color=bg, text_color=fg)
+    btn_temps.configure(fg_color=bg, text_color=fg)
+    btn_informatique.configure(fg_color=bg, text_color=fg)
+
+    combobox_de.configure(values=["Kilomètre par heure (km/h)", "Mètre par seconde (m/s)", "Mile par heure (mph)", "Noeud (kn)"])
+    combobox_vers.configure(values=["Kilomètre par heure (km/h)", "Mètre par seconde (m/s)", "Mile par heure (mph)", "Noeud (kn)"]) 
+
+def fonction_temps():
+    bouton_conversion.configure(command=convertir_temps)
+
+    btn_temps.configure(fg_color=blue, text_color=bg)
+    btn_temperature.configure(fg_color=bg, text_color=fg) 
+    btn_longueur.configure(fg_color=bg, text_color=fg)
+    btn_masse.configure(fg_color=bg, text_color=fg)
+    btn_volume.configure(fg_color=bg, text_color=fg)
+    btn_surface.configure(fg_color=bg, text_color=fg)
+    btn_vitesse.configure(fg_color=bg, text_color=fg)
+    btn_informatique.configure(fg_color=bg, text_color=fg)
+
+    combobox_de.configure(values=["Année (a)", "Mois (m)", "Semaine (sem)", "Jours (j)", "Heures (h)", "Minute (min)", "Seconde (sec)"])
+    combobox_vers.configure(values=["Année (a)", "Mois (m)", "Semaine (sem)", "Jours (j)", "Heures (h)", "Minute (min)", "Seconde (sec)"]) 
+
+def fonction_donnee():
+    bouton_conversion.configure(command=convertir_donnee)
+
+    btn_informatique.configure(fg_color=blue, text_color=bg)
+    btn_temperature.configure(fg_color=bg, text_color=fg) 
+    btn_longueur.configure(fg_color=bg, text_color=fg)
+    btn_masse.configure(fg_color=bg, text_color=fg)
+    btn_volume.configure(fg_color=bg, text_color=fg)
+    btn_surface.configure(fg_color=bg, text_color=fg)
+    btn_vitesse.configure(fg_color=bg, text_color=fg)
+    btn_temps.configure(fg_color=bg, text_color=fg)
+
+    combobox_de.configure(values=["Pétaoctet (PO)", "Téraoctet (TO)", "Gigaoctet (GO)", "Mégaoctet (MO)", "Kilooctet (KO)", "Octet (O)", "Bit"])
+    combobox_vers.configure(values=["Pétaoctet (PO)", "Téraoctet (TO)", "Gigaoctet (GO)", "Mégaoctet (MO)", "Kilooctet (KO)", "Octet (O)", "Bit"]) 
+
+# Fonctions convertir                         
+
+def convertir_longueur():
+    error_verification()
+    valeur = float(entree_de.get())
+    depart = combobox_de.get()
+    arrivee = combobox_vers.get()
+    print(f"La valeure entree est: {valeur}")
+    print(f"Unité de départ: {depart}")
+    print(f"L'unité d'arrivée: {arrivee}")
+    match depart:
+        case "Mètre (m)":
+            u1 = "m"
+        case "Kilomètre (km)":
+            u1 = "km"
+        case "Centimètre (cm)":
+            u1 = "cm"
+        case "Milimètre (mm)":
+            u1 = "mm"
+        case "Héctomètre (hm)":
+            u1 = "hm"
+        case "Décamètre (dam)":
+            u1 = "dam" 
+        case "Décimètre (dm)":
+            u1 = "dm" 
+        case "Pouces (in)":
+            u1 = "pouces" 
+        case "Pieds (ft)":
+            u1 = "pieds"
+        case "Yards (yd)":
+            u1 = "yards" 
+        case "Miles (mi)":
+            u1 = "miles"                                 
+    match arrivee:
+            case "Mètre (m)":
+                u2 = "m"
+            case "Kilomètre (km)":
+                u2 = "km"
+            case "Centimètre (cm)":
+                u2 = "cm"
+            case "Milimètre (mm)":
+                u2 = "mm"
+            case "Héctomètre (hm)":
+                u2 = "hm"
+            case "Décamètre (dam)":
+                u2 = "dam" 
+            case "Décimètre (dm)":
+                u2 = "dm" 
+            case "Pouces (in)":
+                u2 = "pouces" 
+            case "Pieds (ft)":
+                u2 = "pieds"
+            case "Yards (yd)":
+                u2 = "yards" 
+            case "Miles (mi)":
+                u2 = "miles"              
+    resultat = longeurs_distances(u1, u2, valeur)
+    entree_vers.set(resultat)
+
+def convertir_masse():
+    error_verification()
+    valeur = float(entree_de.get())
+    depart = combobox_de.get()
+    arrivee = combobox_vers.get()
+    print(f"La valeure entree est: {valeur}")
+    print(f"Unité de départ: {depart}")
+    print(f"L'unité d'arrivée: {arrivee}")
+    match depart:
+        case "Tonne (t)":
+            u1 = "t"
+        case "Quintal (q)":
+            u1 = "q"
+        case "Dizaine de kilogramme (dkg)":
+            u1 = "dkg"
+        case "Kilogramme (kg)":
+            u1 = "kg"
+        case "Héctogramme (hg)":
+            u1 = "hg"
+        case "Décagramme (dag)":
+            u1 = "dag" 
+        case "Gramme (g)":
+            u1 = "g"
+        case "Décigramme (dg)":
+            u1 = "dg"
+        case "Centigramme (cg)":
+            u1 = "cg"
+        case "Milligramme (mg)":
+            u1 = "mg"
+        case "Once (oz)":
+            u1 = "onces"
+        case "Livre (lb)":
+            u1 = "livres"
+                               
+    match arrivee:
+        case "Tonne (t)":
+            u2 = "t"
+        case "Quintal (q)":
+            u2 = "q"
+        case "Dizaine de kilogramme (dkg)":
+            u2 = "dkg"
+        case "Kilogramme (kg)":
+            u2 = "kg"
+        case "Héctogramme (hg)":
+            u2 = "hg"
+        case "Décagramme (dag)":
+            u2 = "dag" 
+        case "Gramme (g)":
+            u2 = "g"
+        case "Décigramme (dg)":
+            u2 = "dg"
+        case "Centigramme (cg)":
+            u2 = "cg"
+        case "Milligramme (mg)":
+            u2 = "mg"
+        case "Once (oz)":
+            u2 = "onces"
+        case "Livre (lb)":
+            u2 = "livres"            
+    resultat = poids_masses(u1, u2, valeur)
+    entree_vers.set(resultat)
+
+def convertir_volume():
+    error_verification()
+    valeur = float(entree_de.get())
+    depart = combobox_de.get()
+    arrivee = combobox_vers.get()
+    print(f"La valeure entree est: {valeur}")
+    print(f"Unité de départ: {depart}")
+    print(f"L'unité d'arrivée: {arrivee}")
+    match depart:
+        case "Kilolitre (kl)":
+            u1 = "kl"
+        case "Héctolitre (hl)":
+            u1 = "hl"
+        case "Décalitre (dal)":
+            u1 = "dal"
+        case "Litre (l)":
+            u1 = "l"
+        case "Décilitre (dl)":
+            u1 = "dl"
+        case "Centilitre (cl)":
+            u1 = "cl" 
+        case "Millilitre (ml)":
+            u1 = "ml"
+        case "Mètre cube (m3)":
+            u1 = "m3"
+        case "Décimètre cube (dm3)":
+            u1 = "dm3"
+        case "Centimètre cube (cm3)":
+            u1 = "cm3"
+        case "Millimètre cube (mm3)":
+            u1 = "mm3"    
+        case "Onces (oz)":
+            u1 = "onces"
+        case "Tasses":
+            u1 = "tasses"
+        case "Gallons":
+            u1 ="gallons"
+        case "Pintes":
+            u1 = "pintes"                    
+    match arrivee:
+            case "Kilolitre (kl)":
+                u2 = "kl"
+            case "Héctomètre (hm)":
+                u2= "hl"
+            case "Décalitre (dal)":
+                u2 = "dal"
+            case "Litre (l)":
+                u2 = "l"
+            case "Décilitre (dl)":
+                u2 = "dl"
+            case "Centilitre (cl)":
+                u2 = "cl" 
+            case "Millilitre (ml)":
+                u2 = "ml"
+            case "Mètre cube (m3)":
+                u2 = "m3"
+            case "Décimètre cube (dm3)":
+                u2 = "dm3"
+            case "Centimètre cube (cm3)":
+                u2 = "cm3"
+            case "Millimètre cube (mm3)":
+                u2 = "mm3"    
+            case "Onces (oz)":
+                u2 = "onces"
+            case "Tasses":
+                u2 = "tasses"
+            case "Gallons":
+                u2 ="gallons"
+            case "Pintes":
+                u2 = "pintes"              
+    resultat = volumes_capacites(u1, u2, valeur)
+    entree_vers.set(resultat)
+
+def convertir_temperature():
+    error_verification()
+    valeur = float(entree_de.get())
+    depart = combobox_de.get()
+    arrivee = combobox_vers.get()
+    print(f"La valeure entree est: {valeur}")
+    print(f"Unité de départ: {depart}")
+    print(f"L'unité d'arrivée: {arrivee}")
+    match depart:
+        case "Kelvin (°K)":
+            u1 = "K"
+        case "Celcius (°C)":
+            u1 = "C"
+        case "Fahrenheit (°F)":
+            u1 = "F"
+                            
+    match arrivee:
+        case "Kelvin (°K)":
+            u2 = "K"
+        case "Celcius (°C)":
+            u2 = "C"
+        case "Fahrenheit (°F)":
+            u2 = "F"    
+                          
+    resultat = temperatures(u1, u2, valeur)
+    entree_vers.set(resultat)
+
+def convertir_surface():
+    error_verification()
+    valeur = float(entree_de.get())
+    depart = combobox_de.get()
+    arrivee = combobox_vers.get()
+    print(f"La valeure entree est: {valeur}")
+    print(f"Unité de départ: {depart}")
+    print(f"L'unité d'arrivée: {arrivee}")
+    match depart:
+        case "Kilomètre carré (km2)":
+            u1 = "km2"
+        case "Héctare (ha)":
+            u1 = "ha"
+        case "Aire (a)":
+            u1 = "a"
+        case "Mètre carré (m2)":
+            u1 = "m2"
+        case "Décimètre carré (dm2)":
+            u1 = "dm2"
+        case "Centimètre carré (cm2)":
+            u1 = "cm2" 
+        case "Millimètre carré (mm2)":
+            u1 = "mm2" 
+    match arrivee:
+        case "Kilomètre carré (km2)":
+            u2 = "km2"
+        case "Héctare (ha)":
+            u2 = "ha"
+        case "Aire (a)":
+            u2 = "a"
+        case "Mètre carré (m2)":
+            u2 = "m2"
+        case "Décimètre carré (dm2)":
+            u2 = "dm2"
+        case "Centimètre carré (cm2)":
+            u2 = "cm2" 
+        case "Millimètre carré (mm2)":
+            u2 = "mm2"                                         
+    resultat = surfaces(u1, u2, valeur)
+    entree_vers.set(resultat)
+
+def convertir_vitesse():
+    error_verification()
+    valeur = float(entree_de.get())
+    depart = combobox_de.get()
+    arrivee = combobox_vers.get()
+    print(f"La valeure entree est: {valeur}")
+    print(f"Unité de départ: {depart}")
+    print(f"L'unité d'arrivée: {arrivee}")
+    match depart:
+        case "Kilomètre par heure (km/h)":
+            u1 = "km_h"
+        case "Mètre par seconde (m/s)":
+            u1 = "m_s"
+        case "Mile par heure (mph)":
+            u1 = "mph"
+        case "Noeud (kn)":
+            u1 = "noeuds"
+
+    match arrivee:
+        case "Kilomètre par heure (km/h)":
+            u2 = "km_h"
+        case "Mètre par seconde (m/s)":
+            u2 = "m_s"
+        case "Mile par heure (mph)":
+            u2 = "mph"
+        case "Noeud (kn)":
+            u2 = "noeuds"        
+                 
+    resultat = vitesses(u1, u2, valeur)
+    entree_vers.set(resultat)
+
+def convertir_temps():
+    error_verification()
+    valeur = float(entree_de.get())
+    depart = combobox_de.get()
+    arrivee = combobox_vers.get()
+    print(f"La valeure entree est: {valeur}")
+    print(f"Unité de départ: {depart}")
+    print(f"L'unité d'arrivée: {arrivee}")
+    match depart:
+        case "Année (a)":
+            u1 = "annee"
+        case "Mois (m)":
+            u1 = "mois"
+        case "Semaine (sem)":
+            u1 = "sem"
+        case "Jours (j)":
+            u1 = "jours"
+        case "Heures (h)":
+            u1 = "heures"
+        case "Minute (min)":
+            u1 = "min" 
+        case "Seconde (sec)":
+            u1 = "sec"   
+
+    match arrivee:
+        case "Année (a)":
+            u2 = "annee"
+        case "Mois (m)":
+            u2 = "mois"
+        case "Semaine (sem)":
+            u2 = "sem"
+        case "Jours (j)":
+            u2 = "jours"
+        case "Heures (h)":
+            u2 = "heures"
+        case "Minute (min)":
+            u2 = "min" 
+        case "Seconde (sec)":
+            u2 = "sec"                         
+                  
+    resultat = temps(u1, u2, valeur)
+    entree_vers.set(resultat)
+
+def convertir_donnee():
+    error_verification()
+    valeur = float(entree_de.get())
+    depart = combobox_de.get()
+    arrivee = combobox_vers.get()
+    print(f"La valeure entree est: {valeur}")
+    print(f"Unité de départ: {depart}")
+    print(f"L'unité d'arrivée: {arrivee}")
+    match depart:
+        case "Pétaoctet (PO)":
+            u1 = "po"
+        case "Téraoctet (TO)":
+            u1 = "to"
+        case "Gigaoctet (GO)":
+            u1 = "go"
+        case "Mégaoctet (MO)":
+            u1 = "mo"
+        case "Kilooctet (KO)":
+            u1 = "ko"
+        case "Octet (O)":
+            u1 = "o" 
+        case "Bit":
+            u1 = "bit" 
+
+    match arrivee:
+        case "Pétaoctet (PO)":
+            u2 = "po"
+        case "Téraoctet (TO)":
+            u2 = "to"
+        case "Gigaoctet (GO)":
+            u2 = "go"
+        case "Mégaoctet (MO)":
+            u2 = "mo"
+        case "Kilooctet (KO)":
+            u2 = "ko"
+        case "Octet (O)":
+            u2 = "o" 
+        case "Bit":
+            u2 = "bit"                           
+               
+    resultat = donnees(u1, u2, valeur)
+    entree_vers.set(resultat)                            
+
+  
+
 
 # Création de la fenetre
 fenetre = ctk.CTk()
 fenetre.title("Convertisseur d'unités")
 
+
 # Les varibales
 bg = "white"
 fg = "black"
-blue = "#00F"
-
+blue = "#2563EB"
+grey = "#A0A0A0"
 
 
 # Centrage et taille initiale de la fenêtre
@@ -47,7 +571,7 @@ fenetre.grid_rowconfigure(1, weight=20)
 #Frame du titre
 frm_titre = ctk.CTkFrame(
     fenetre, 
-    fg_color=bg, 
+    fg_color=bg
     )
 frm_titre.grid(pady=10, 
                padx= 10, 
@@ -65,8 +589,9 @@ frm_titre.grid_rowconfigure(1, weight=1)
 label_titre = ctk.CTkLabel(frm_titre, 
                            text="Convertisseur d'Unités"
                            )
-label_titre.configure(font=("Aria", 26, "bold"), 
-                      text_color=fg)
+label_titre.configure(font=("Aria", 40, "bold"), 
+                      text_color=fg
+                      )
 label_titre.grid(
     column=0,
     row=0,
@@ -77,7 +602,7 @@ label_titre.grid(
 label_titre_info = ctk.CTkLabel(frm_titre, 
                                 text="Transforme mesure entre différents systèmes (métrique, impérial, ect...)"
                                 )
-label_titre_info.configure(font=("Aria", 15, "bold"), 
+label_titre_info.configure(font=("Aria", 18), 
                            text_color=fg)
 label_titre_info.grid(
     column=0,
@@ -93,13 +618,13 @@ frm_principal = ctk.CTkFrame(fenetre,
 frm_principal.grid(padx=10, 
                    pady=(0, 0),
                    sticky="nesw", 
-                   ipadx= 10,
+                   ipadx= 3,
                    column=0,
                    row=1)
 
 #Configuration de Frame principal
 frm_principal.grid_columnconfigure(0, weight=1) # Diviser en quatres colonnes le collones 0 a une seule part
-frm_principal.grid_columnconfigure(1, weight=20) # Le colonnes 1 a trois parts
+frm_principal.grid_columnconfigure(1, weight=6) # Le colonnes 1 a trois parts
 frm_principal.grid_rowconfigure(0, weight=1)
 
 #Frame des options
@@ -109,26 +634,424 @@ frm_option = ctk.CTkFrame(frm_principal,
                           border_width=2)
 frm_option.grid(column=0, 
                 row=0, 
-                padx=2, 
+                padx=1,
+                ipadx=50, 
                 sticky = "nsew") # "nsew" permet e proncdre rour epave
 
+# Configuration des grid de frm_option
+frm_option.grid_columnconfigure(0, weight=1)
+frm_option.grid_rowconfigure(0, weight=1)
+frm_option.grid_rowconfigure(1, weight=1)
+frm_option.grid_rowconfigure(2, weight=1)
+frm_option.grid_rowconfigure(3, weight=1)
+frm_option.grid_rowconfigure(4, weight=1)
+frm_option.grid_rowconfigure(5, weight=1)
+frm_option.grid_rowconfigure(6, weight=1)
+frm_option.grid_rowconfigure(7, weight=1)
+frm_option.grid_rowconfigure(8, weight=4) # Pour les paramètres
+
+# Frame des onglets
+btn_longueur = ctk.CTkButton(frm_option, 
+                             text="Longueur",  
+                             fg_color=bg, 
+                             text_color=fg,
+                             hover_color= blue,
+                             command=fonction_longueur,
+                             font=("Aria", 15, "bold")
+                             )
+btn_longueur.grid(
+    column=0,
+    row=0,
+    sticky="nsew"
+)
+
+btn_masse = ctk.CTkButton(frm_option, 
+
+                          text="Masse", 
+                          fg_color=bg, 
+                          text_color=fg,
+                          hover_color= blue,
+                          command=fonction_masse,
+                          font=("Aria", 15, "bold")
+                          )
+btn_masse.grid(
+    column=0,
+    row=1,
+    sticky="nsew"
+)
+
+btn_volume = ctk.CTkButton(frm_option, 
+                           text="Volume", 
+                           fg_color=bg, 
+                           text_color=fg,
+                           hover_color= blue,
+                           command=fonction_volume,
+                           font=("Aria", 15, "bold")
+                           )
+btn_volume.grid(
+    column=0,
+    row=2,
+    sticky="nsew"
+)
+
+btn_temperature = ctk.CTkButton(frm_option, 
+                                text="Température", 
+                                fg_color=bg, 
+                                text_color=fg,
+                                hover_color= blue,
+                                command=fonction_temperature,
+                                font=("Aria", 15, "bold")
+                                )
+btn_temperature.grid(
+    column=0,
+    row=3,
+    sticky="nsew"
+)
+
+btn_surface = ctk.CTkButton(frm_option, 
+                            text="Surface", 
+                            fg_color=bg, 
+                            text_color=fg,
+                            hover_color= blue,
+                            command=fonction_surface,
+                            font=("Aria", 15, "bold")
+                            )
+btn_surface.grid(
+    column= 0,
+    row=4,
+    sticky="nsew"
+)
+
+btn_vitesse = ctk.CTkButton(frm_option, 
+                            text="Vitesse", 
+                            fg_color=bg, 
+                            text_color=fg,
+                            hover_color= blue,
+                            command=fonction_vitesse,
+                            font=("Aria", 15, "bold")
+                            )
+btn_vitesse.grid(
+    column=0,
+    row=5,
+    sticky="nsew"
+)
+
+btn_temps = ctk.CTkButton(frm_option, 
+                          text="Temps", 
+                          fg_color=bg, 
+                          text_color=fg,
+                          hover_color=blue,
+                          command=fonction_temps,
+                          font=("Aria", 15, "bold")
+                          )
+btn_temps.grid(
+    column=0,
+    row=6,
+    sticky="nsew"
+)
+
+btn_informatique = ctk.CTkButton(frm_option, 
+                                 text="Données", 
+                                 fg_color=bg, 
+                                 text_color=fg,
+                                 hover_color= blue,
+                                 command=fonction_donnee,
+                                 font=("Aria", 15, "bold")
+                                 )
+btn_informatique.grid(
+    column=0,
+    row=7,
+    sticky="nsew"
+)
+
+frm_parametre = ctk.CTkFrame(frm_option, 
+                             fg_color=bg)
+frm_parametre.grid(
+    column=0,
+    row=8,
+    sticky="nsew",
+)
+
+# Configuration des grid de frm_parametre
+frm_parametre.grid_columnconfigure(0, weight=1)
+frm_parametre.grid_columnconfigure(1, weight=1)
+frm_parametre.grid_rowconfigure(0, weight=1)
+
+
+# Dans les parametres
+btn_clair = ctk.CTkButton(frm_parametre, 
+                          text="Clair",
+                          fg_color=bg, 
+                          text_color=fg,
+                          hover_color= blue,
+                          width=90,
+                          font=("Aria", 15, "bold")
+                          )
+btn_clair.grid(
+    column=0,
+    row=0,
+    ipadx=0,
+    ipady=8,
+    padx=1
+)
+
+btn_sombre = ctk.CTkButton(frm_parametre, 
+                          text="Sombre",
+                          fg_color=bg, 
+                          text_color=fg,
+                          hover_color= blue,
+                          width=90,
+                          font=("Aria", 15, "bold")
+                          )
+btn_sombre.grid(
+    column=1,
+    row=0,
+    ipadx=0,
+    ipady=8,
+    padx=1
+)
+
+
+
+
+
 # Frame de la converion principale
-frm_conv_principal = ctk.CTkFrame(frm_principal, fg_color=bg, border_color=fg, border_width=2)
+frm_conv_principal = ctk.CTkFrame(frm_principal, 
+                                  fg_color=bg
+                                  )
 frm_conv_principal.grid(column=1, 
                         row=0, 
                         padx=2, 
                         sticky = "nsew")
 
+# Configuration des grids de frm_conv_principal
+frm_conv_principal.grid_columnconfigure(0, weight=1)
+frm_conv_principal.grid_rowconfigure(0, weight=4)
+frm_conv_principal.grid_rowconfigure(1, weight=1)
 
 
+# La table de conversion
+frm_table_conv = ctk.CTkFrame(frm_conv_principal, 
+                              fg_color=bg,
+                              border_color=grey,
+                              border_width=2
+                              )
+frm_table_conv.grid(column=0,
+                    row=0,
+                    sticky="nsew")
+
+# Configuration des grids de frm_table_conv
+frm_table_conv.grid_columnconfigure(0, weight=1)
+frm_table_conv.grid_rowconfigure(0, weight=2)
+frm_table_conv.grid_rowconfigure(1, weight=1)
+
+# frm de conversion 
+frm_conversion = ctk.CTkFrame(frm_table_conv, 
+                              fg_color=bg,
+                              )
+frm_conversion.grid(
+    column=0,
+    row=0,
+    ipadx=10,
+    ipady=10,
+    padx=10,
+    pady=10,
+    sticky="nsew"
+)
+# Configuration des grids de frm_conversion
+frm_conversion.grid_columnconfigure(0, weight=4)
+frm_conversion.grid_columnconfigure(1, weight=1)
+frm_conversion.grid_columnconfigure(2, weight=4)
+frm_conversion.grid_rowconfigure(0, weight=1)
 
 
+#frm d'entree
+frm_de = ctk.CTkFrame(frm_conversion,
+                      fg_color=bg)
+frm_de.grid(
+    column=0,
+    row=0,
+    ipadx=2,
+    #sticky="nsew"
+)
 
+# Configuration des grids de frm_de
+frm_de.grid_columnconfigure(0, weight=1)
+frm_de.grid_rowconfigure(0, weight=1)
+frm_de.grid_rowconfigure(1, weight=1)
+frm_de.grid_rowconfigure(2, weight=1)
 
+# Label de frm_de
+label_de = ctk.CTkLabel(frm_de,
+                        text_color=fg,
+                        fg_color=bg,
+                        text="De",
+                        font=("Aria", 15, "bold")
+                        )
+label_de.grid(
+    column=0,
+    row=0,
+    ipadx=10,
+    pady=3)
 
+# Conbobox de frm_de
+combobox_de = ctk.CTkComboBox(frm_de,
+                              values=[],
+                              fg_color=bg,
+                              text_color=fg,
+                              border_color=grey,
+                              width=460,
+                              height=80,
+                              dropdown_fg_color=bg,
+                              dropdown_text_color=fg,
+                              state="readonly",
+                              dropdown_hover_color=blue,
+                              font=("Aria", 20, "bold"),
+                              dropdown_font=("Aria", 15, "bold")
+                              )
+combobox_de.grid(
+    column=0,
+    row=1,
+    # ipadx=60,
+    # ipady=20,
+    pady=3
+)
 
+# Entree de frm_de
+entree_de = ctk.CTkEntry(frm_de,
+                         fg_color=bg,
+                         text_color=fg,
+                         border_color=grey,
+                         placeholder_text="Valeur 1",
+                         width=460,
+                         height=80,
+                         font=("Aria", 20, "bold")
+                         )
+entree_de.grid(
+    column=0,
+    row=2,
+    # ipadx=60,
+    # ipady=20,
+    pady=(6,0)
+)
 
+# Bouton d'inversion
+label_fleche = ctk.CTkButton(frm_conversion,
+                            text="==>",
+                            fg_color=blue,
+                            text_color=bg,
+                            hover_color=blue,
+                            font=("Aria", 40, "bold")
+                            )
+label_fleche.grid(
+    column=1,
+    row=0,
+    ipadx=0,
+    ipady=12,
+    padx=4
+)
 
+#frm de sortie
+frm_vers = ctk.CTkFrame(frm_conversion,
+                        fg_color=bg
+                        )
+frm_vers.grid(
+    column=2,
+    row=0,
+    ipadx=2,
+    #sticky="nsew"
+)
+
+# Configuration des grids de frm_vers
+frm_vers.grid_columnconfigure(0, weight=1)
+frm_vers.grid_rowconfigure(0, weight=1)
+frm_vers.grid_rowconfigure(1, weight=1)
+frm_vers.grid_rowconfigure(2, weight=1)
+
+# Label de frm_de
+label_vers = ctk.CTkLabel(frm_vers,
+                        text_color=fg,
+                        fg_color=bg,
+                        text="Vers",
+                        font=("Aria", 15, "bold")
+                        )
+label_vers.grid(
+    column=0,
+    row=0,
+    ipadx=10,
+    pady=3)
+
+# Conbobox de frm_de
+combobox_vers = ctk.CTkComboBox(frm_vers,
+                              values=[],  
+                              fg_color=bg,
+                              text_color=fg,
+                              border_color=grey,
+                              width=460,
+                              height=80,
+                              dropdown_fg_color=bg,
+                              dropdown_text_color=fg,
+                              state="readonly",
+                              dropdown_hover_color=blue,
+                              font=("Aria", 20, "bold"),
+                              dropdown_font=("Aria", 15, "bold")
+                              )
+combobox_vers.grid(
+    column=0,
+    row=1,
+    # ipadx=60,
+    # ipady=20,
+    pady=3
+)
+
+# Entree de frm_de
+entree_vers = ctk.CTkEntry(frm_vers,
+                           fg_color=bg,
+                           text_color=fg,
+                           border_color=grey,
+                           placeholder_text="Valeur 2",
+                           width=460,
+                           height=80,
+                           font=("Aria", 20, "bold")
+                           )
+entree_vers.grid(
+    column=0,
+    row=2,
+    # ipadx=60,
+    # ipady=20,
+    pady=(6,0)
+)
+
+# Bouton de conversion
+bouton_conversion = ctk.CTkButton(frm_table_conv,
+                                  text="Convertir",
+                                  fg_color=blue,
+                                  text_color=fg,
+                                  command=error_message,
+                                  hover_color="#0A0",
+                                  font=("Aria", 20, "bold")
+                                  )
+bouton_conversion.grid(
+    column=0,
+    row=1,
+    ipadx=10,
+    ipady=10,
+    sticky="ew",
+    padx=20,
+    pady=(0,12)
+)
+
+# frm conversion rapide
+frm_conv_rapide = ctk.CTkFrame(frm_conv_principal,
+                               fg_color=bg,
+                               border_color=grey,
+                               border_width=2)
+frm_conv_rapide.grid(
+    column=0,
+    row=1,
+    sticky='nsew',
+    pady=(4,0)
+)
 
 
 

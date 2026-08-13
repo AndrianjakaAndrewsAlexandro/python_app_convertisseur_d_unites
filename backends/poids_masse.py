@@ -45,7 +45,7 @@ def onces_livres(u1, u2, valeur):
 
     
 # Conversion final
-def final_conv(u1, u2, valeur):
+def poids_masses(u1, u2, valeur):
     listes = ["t", "q", "dkg", "kg", "hg", "dag", "g", "dg", "cg", "mg"]
     if u1 in listes and u2 in listes:
         return conv_masse(u1, u2, valeur)

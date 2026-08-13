@@ -59,14 +59,14 @@ def cube_volume(u1, u2, valeur):
         reponse = valeur * (1000**puiss)
         return reponse
     elif u1 in listes and u2 in listes:
-        return conv_volume(u1, u2)
-    elif (u1 == "m3" and u2 in listes) or (u2 == "m3" and u2 in listes):
+        return conv_volume(u1, u2, valeur)
+    elif (u1 == "m3" and u2 in listes) or (u2 == "m3" and u1 in listes):
         return m3(u1, u2, valeur)
-    elif (u1 == "dm3" and u2 in listes) or (u2 == "dm3" and u2 in listes):
+    elif (u1 == "dm3" and u2 in listes) or (u2 == "dm3" and u1 in listes):
             return dm3(u1, u2, valeur)
-    elif (u1 == "cm3" and u2 in listes) or (u2 == "cm3" and u2 in listes):
+    elif (u1 == "cm3" and u2 in listes) or (u2 == "cm3" and u1 in listes):
             return cm3(u1, u2, valeur)
-    elif (u1 == "mm3" and u2 in listes) or (u2 == "mm3" and u2 in listes):
+    elif (u1 == "mm3" and u2 in listes) or (u2 == "mm3" and u1 in listes):
             return mm3(u1, u2, valeur)
     
 
@@ -88,7 +88,7 @@ def onces(u1, u2, valeur):
 
 
 # Test
-#print(pouces("pouces", "pouces", 18))
+#print(onces("onces", "m3", 20))
 
 # Pieds conversion
 def tasses(u1, u2, valeur):
@@ -202,7 +202,7 @@ def pintes_gallons(u1, u2, valeur):
 
 #print(yards_miles("miles", "yards", 20))    
 
-def final_conv(u1, u2, valeur):
+def volumes_capacites(u1, u2, valeur):
     listes = ["kl", "hl", "dal", "l", "dl", "cl", "ml", "m3", "dm3", "cm3", "mm3"]
     if u1 in listes and u2 in listes:
         return cube_volume(u1, u2, valeur)
@@ -242,21 +242,9 @@ def final_conv(u1, u2, valeur):
 
 
 
-#print(conv_long("cm", "dm", 20))
-#print(pouces("pouces", "dm", 18))
-#print(pieds("m", "pieds", 30))
-#print(yards("dm", "yards", 40))
-#print(miles("miles", "mm", 20))
-#print(pouces_pieds("pouces", "pieds", 20))
-#print(pouces_yards("pouces", "yards", 20))
-#print(pouces_miles("miles", "pouces", 20))
-#print(pieds_yards("yards", "pieds", 20))
-#print(pieds_miles("miles", "pieds", 20))
-#print(yards_miles("miles", "yards", 20))
-
 
 #TEST FINAL CONVERSION DE u1 en u2
-print(final_conv("miles", "yards", 20))
+#print(final_conv("gallons", "pintes", 20))
 
 
 
